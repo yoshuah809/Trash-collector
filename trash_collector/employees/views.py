@@ -18,21 +18,25 @@ def index(request):
         logged_in_employee = Employee.objects.get(user=logged_in_user)
 
         today = date.today()
-        
-        context = {
-            'logged_in_employee': logged_in_employee,
-            'today': today
-        }
+        days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
         Customer = apps.get_model('customers.Customer')
         all_customers = Customer.objects.all()
-        customers_in_zipcode = Customer.objects.filter(zip_code = "{{ logged_in_employee.zip_code }}")
-        customers_pickup_day = Customer.objects.filter(weekly_pickup = today)
+        customers_in_zipcode = Customer.objects.filter(zip_code = logged_in_employee.zip_code)
+        customers_pickup_day = Customer.objects.filter(weekly_pickup = days[date.weekday(today)])
         customers_one_time_pickup = Customer.objects.filter(one_time_pickup = today)
         customers_need_pickup = Customer.objects.exclude(date_of_last_pickup = today)
 
 
-
+        context = {
+            'logged_in_employee': logged_in_employee,
+            'today': today,
+            'all_customers' : all_customers,
+            'customers_in_zipcode' : customers_in_zipcode,
+            'customers_pickup_day' : customers_pickup_day,
+            'customers_one_time_pickup' : customers_one_time_pickup,
+            'customers_need_pickup' : customers_need_pickup
+        }
         return render(request, 'employees/index.html', context)
     except ObjectDoesNotExist:
         return HttpResponseRedirect(reverse('employees:create'))

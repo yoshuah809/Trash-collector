@@ -9,9 +9,38 @@
     <br />
     <br />
     <br />
-    Customers in area: {% for customer in all_customers %}
+    Customers: {% for customer in all_customers %}
     {{ customer.name }}
     {% endfor %}
+    <br />
+    <br />
+    <br />
+    Customers: {% for customer in customers_in_zipcode %}
+    {{ customer.name }}
+    {% endfor %}
+    <br />
+    <br />
+    <br />
+    Customers: {% for customer in customers_pickup_day %}
+    {{ customer.name }}
+    {% endfor %}
+    <br />
+    <br />
+    <br />
+    Customers: {% for customer in customers_one_time_pickup %}
+    {{ customer.name }}
+    {% endfor %}
+    <br />
+    <br />
+    <br />
+    Customers: {% for customer in customers_need_pickup %}
+    {{ customer.name }}
+    {% endfor %}
+    <br />
+    <br />
+    <br />
+    Date: {{ today }}
+    
 
   {% else %}
     <p>You are at the employee index, but you are not logged in.</p>
