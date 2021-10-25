@@ -23,6 +23,16 @@ def index(request):
             'logged_in_employee': logged_in_employee,
             'today': today
         }
+
+        Customer = apps.get_model('customers.Customer')
+        all_customers = Customer.objects.all()
+        customers_in_zipcode = Customer.objects.filter(zip_code = "{{ logged_in_employee.zip_code }}")
+        customers_pickup_day = Customer.objects.filter(weekly_pickup = today)
+        customers_one_time_pickup = Customer.objects.filter(one_time_pickup = today)
+        customers_need_pickup = Customer.objects.exclude(date_of_last_pickup = today)
+
+
+
         return render(request, 'employees/index.html', context)
     except ObjectDoesNotExist:
         return HttpResponseRedirect(reverse('employees:create'))
