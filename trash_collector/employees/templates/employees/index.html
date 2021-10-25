@@ -4,9 +4,10 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-    Hello Employee {{ user.username }}!
-    Name: {{user.name}}
-    Zipcode: {{user.zip_code}}
+    Hello Employee {{ logged_in_employee.name }}
+    
+
+    Zipcode: {{ logged_in_employee.zip_code }}
 
   {% else %}
     <p>You are at the employee index, but you are not logged in.</p>
