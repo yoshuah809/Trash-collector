@@ -1,12 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'employees\employee_base.html' %}
 
 {% block title %}{% block header %} Employee Home {% endblock %}{% endblock %}
 
 {% block content %}
   {% if user.is_authenticated %}
-    Hello Employee {{ logged_in_employee.name }}
-    
-
+    Hello Employee {{ logged_in_employee.name }} <br />
     Zipcode: {{ logged_in_employee.zip_code }}
 
   {% else %}
