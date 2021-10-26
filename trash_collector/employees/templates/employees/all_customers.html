@@ -1,6 +1,6 @@
 {% extends 'employees\employee_base.html' %}
 
-{% block title %}{% block header %} Customer List {% endblock %}{% endblock %}
+{% block title %}{% block header %} Employee View {% endblock %}{% endblock %}
 
 {% block content %}
   {% if user.is_authenticated %}
@@ -12,13 +12,13 @@
     <br />
    
       <p></p>
-      <h1>List Of Customers</h1>
+      <h1>Customer List</h1>
       <p></p>
 
       <p></p>
-      
       <div class="dropdown">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Choose a day</a>
+        <h4>Sort By:</h4>
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Day of the Week</a>
       
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
           <li><a class="dropdown-item" href="{% url 'employees:all_customers' %}">All</a></li>
@@ -28,10 +28,11 @@
           <li><a class="dropdown-item" href="{% url 'employees:filter_by_day' '3' %}">Thursday</a></li>
           <li><a class="dropdown-item" href="{% url 'employees:filter_by_day' '4' %}">Friday</a></li>
         </ul>
-
+      </div>
+      <br />
       <table class="table table-hover">
      
-        <thead>
+        <thead class="thead-dark">
           <tr>
             <th scope="col">Customer ID</th>
             <th scope="col">Name</th>
