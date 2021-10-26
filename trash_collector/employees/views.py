@@ -90,3 +90,17 @@ def all_customers(request):
         return render(request, 'employees/all_customers.html', context)
     except ObjectDoesNotExist:
         return HttpResponseRedirect(reverse('employees:create'))
+
+def confirm_pickup(request, customer_id):
+        today = date.today()
+        logged_in_user = request.user
+        logged_in_employee = Employee.objects.get(user=logged_in_user)
+        context = {
+           'all_customers' : all_customers,
+        }
+        Customer = apps.get_model('customers.Customer')
+        customer_confirm = Customer.objects.get(id=customer_id)
+        customer_confirm.date_of_last_pickup = today
+        customer_confirm.balance += 20
+        customer_confirm.save()
+        return render(request, 'employees/index.html', context)

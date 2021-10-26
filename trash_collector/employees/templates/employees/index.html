@@ -28,7 +28,7 @@
           </tr>
         </thead>
        
-        <!-- {{ customer.name }} -->
+       
         <tbody>
 
         {% for customer in customers_need_pickup %}
@@ -40,41 +40,12 @@
             <td>{{ customer.weekly_pickup }}</td>
             <td>{{ customer.one_time_pickup }}</td>
             <td>{{ customer.day_of_last_pickup }}</td>
+            <td><a class = "btn btn-outline-success" href="{% url 'employees:confirm_pickup' customer.id %}">Confirm</a></td>
           
           </tr>
          
         {% endfor  %}  
       
-
-    
-    <!-- <br />
-    <br />
-    <br />
-    Customers Zip Code : {% for customer in customers_in_zipcode %}
-    {{ customer.name }}
-    {% endfor %}
-    <br />
-    <br />
-    <br />
-    Customers same picup day: {% for customer in customers_pickup_day %}
-    {{ customer.name }}
-    {% endfor %}
-    <br />
-    <br />
-    <br />
-    CustomersOne time pickup: {% for customer in customers_one_time_pickup %}
-    {{ customer.name }}
-    {% endfor %}
-    <br />
-    <br />
-    <br />
-    Customers: {% for customer in customers_need_pickup %}
-    {{ customer.name }}
-    {% endfor %}
-    <br />
-    <br />
-    <br />
-    Date: {{ today }} -->
      
     
 
