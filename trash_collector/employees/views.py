@@ -17,18 +17,14 @@ def index(request):
     try:
         # This line will return the customer record of the logged-in user if one exists
         logged_in_employee = Employee.objects.get(user=logged_in_user)
-
         today = date.today()
         days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-
         Customer = apps.get_model('customers.Customer')
         all_customers = Customer.objects.all()
         customers_in_zipcode =  all_customers.filter(zip_code = logged_in_employee.zip_code)
         customers_pickup_day = customers_in_zipcode.filter(Q(weekly_pickup = days[date.weekday(today)]) | Q(one_time_pickup = today))
         customers_not_suspended = customers_pickup_day.exclude(Q(suspend_start__lt=today) & Q(suspend_end__gt=today))
         customers_need_pickup = customers_not_suspended.exclude(date_of_last_pickup = today)
-
-
         context = {
             'logged_in_employee': logged_in_employee,
             'today': today,
@@ -80,10 +76,8 @@ def all_customers(request):
     try:
         # This line will return the customer record of the logged-in user if one exists
         logged_in_employee = Employee.objects.get(user=logged_in_user)
-
         Customer = apps.get_model('customers.Customer')
         all_customers = Customer.objects.all()
-
         context = {
             'logged_in_employee': logged_in_employee,
             'all_customers' : all_customers,
@@ -95,7 +89,6 @@ def all_customers(request):
 
 def confirm_pickup(request, customer_id):
     today = date.today()
-    logged_in_user = request.user
     context = {
        'all_customers' : all_customers,
     }
@@ -112,7 +105,7 @@ def filter_by_day(request, id):
     logged_in_employee = Employee.objects.get(user=logged_in_user)
     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
     Customer = apps.get_model('customers.Customer')
-    all_customers = Customer.objects.all().filter(weekly_pickup = days[id])
+    all_customers = Customer.objects.all().filter(weekly_pickup=days[id])
     context = {
         'logged_in_employee' : logged_in_employee,
         'all_customers' : all_customers,
