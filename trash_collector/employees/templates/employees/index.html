@@ -9,25 +9,59 @@
     <br />
     <br />
     <br />
-    Customers: {% for customer in all_customers %}
+   
+      <p></p>
+      <h1>List Of Customers</h1>
+      <p></p>
+      <table class="table table-hover">
+     
+        <thead>
+          <tr>
+            <th scope="col">Customer ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Zip Code</th>
+            <th scope="col">Weekly Pickup</th>
+            <th scope="col">One time Pickup</th>
+            <th scope="col">Day of Last Pickup</th>
+          </tr>
+        </thead>
+       
+        <!-- {{ customer.name }} -->
+        <tbody>
+
+        {% for customer in all_customers %}
+          <tr>
+            <th scope="row"> {{ customer.id }}</th>
+            <td>{{ customer.name }}</td>
+            <td>{{ customer.address }}</td>
+            <td>{{ customer.zip_code }}</td>
+            <td>{{ customer.weekly_pickup }}</td>
+            <td>{{ customer.one_time_pickup }}</td>
+            <td>{{ customer.day_of_last_pickup }}</td>
+          
+          </tr>
+         
+        {% endfor  %}  
+      
+
+    
+    <!-- <br />
+    <br />
+    <br />
+    Customers Zip Code : {% for customer in customers_in_zipcode %}
     {{ customer.name }}
     {% endfor %}
     <br />
     <br />
     <br />
-    Customers: {% for customer in customers_in_zipcode %}
+    Customers same picup day: {% for customer in customers_pickup_day %}
     {{ customer.name }}
     {% endfor %}
     <br />
     <br />
     <br />
-    Customers: {% for customer in customers_pickup_day %}
-    {{ customer.name }}
-    {% endfor %}
-    <br />
-    <br />
-    <br />
-    Customers: {% for customer in customers_one_time_pickup %}
+    CustomersOne time pickup: {% for customer in customers_one_time_pickup %}
     {{ customer.name }}
     {% endfor %}
     <br />
@@ -39,7 +73,8 @@
     <br />
     <br />
     <br />
-    Date: {{ today }}
+    Date: {{ today }} -->
+     
     
 
   {% else %}
