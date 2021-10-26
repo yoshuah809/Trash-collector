@@ -74,6 +74,7 @@ def edit_profile(request):
         return render(request, 'employees/edit_profile.html', context)
 
 def all_customers(request):
+    today = date.today()
     # The following line will get the logged-in user (if there is one) within any view function
     logged_in_user = request.user
     try:
@@ -86,24 +87,35 @@ def all_customers(request):
         context = {
             'logged_in_employee': logged_in_employee,
             'all_customers' : all_customers,
+            'today': today
         }
         return render(request, 'employees/all_customers.html', context)
     except ObjectDoesNotExist:
         return HttpResponseRedirect(reverse('employees:create'))
 
 def confirm_pickup(request, customer_id):
-        today = date.today()
-        logged_in_user = request.user
-        logged_in_employee = Employee.objects.get(user=logged_in_user)
-        context = {
-           'all_customers' : all_customers,
-        }
-        Customer = apps.get_model('customers.Customer')
-        customer_confirm = Customer.objects.get(id=customer_id)
-        customer_confirm.date_of_last_pickup = today
-        customer_confirm.balance += 20
-        customer_confirm.save()
-        return render(request, 'employees/index.html', context)
+    today = date.today()
+    logged_in_user = request.user
+    context = {
+       'all_customers' : all_customers,
+    }
+    Customer = apps.get_model('customers.Customer')
+    customer_confirm = Customer.objects.get(id=customer_id)
+    customer_confirm.date_of_last_pickup = today
+    customer_confirm.balance += 20
+    customer_confirm.save()
+    return render(request, 'employees/index.html', context)
         
-def filter_by_day(request, day):
-    pass        
+def filter_by_day(request, id):
+    today = date.today()
+    logged_in_user = request.user
+    logged_in_employee = Employee.objects.get(user=logged_in_user)
+    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+    Customer = apps.get_model('customers.Customer')
+    all_customers = Customer.objects.all().filter(weekly_pickup = days[id])
+    context = {
+        'logged_in_employee' : logged_in_employee,
+        'all_customers' : all_customers,
+        'today': today
+    }      
+    return render(request, 'employees/all_customers.html', context)
