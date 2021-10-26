@@ -5,6 +5,7 @@ from django.apps import apps
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import date
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from .models import Employee
 # Create your views here.
 
@@ -22,19 +23,15 @@ def index(request):
 
         Customer = apps.get_model('customers.Customer')
         all_customers = Customer.objects.all()
-        customers_in_zipcode = Customer.objects.filter(zip_code = logged_in_employee.zip_code)
-        customers_pickup_day = Customer.objects.filter(weekly_pickup = days[date.weekday(today)])
-        customers_one_time_pickup = Customer.objects.filter(one_time_pickup = today)
-        customers_need_pickup = Customer.objects.exclude(date_of_last_pickup = today)
+        customers_in_zipcode =  all_customers.filter(zip_code = logged_in_employee.zip_code)
+        customers_pickup_day = customers_in_zipcode.filter(Q(weekly_pickup = days[date.weekday(today)]) | Q(one_time_pickup = today))
+        customers_not_suspended = customers_pickup_day.exclude(Q(suspend_start__lt=today) & Q(suspend_end__gt=today))
+        customers_need_pickup = customers_not_suspended.exclude(date_of_last_pickup = today)
 
 
         context = {
             'logged_in_employee': logged_in_employee,
             'today': today,
-            'all_customers' : all_customers,
-            'customers_in_zipcode' : customers_in_zipcode,
-            'customers_pickup_day' : customers_pickup_day,
-            'customers_one_time_pickup' : customers_one_time_pickup,
             'customers_need_pickup' : customers_need_pickup
         }
         return render(request, 'employees/index.html', context)
@@ -90,6 +87,6 @@ def all_customers(request):
             'logged_in_employee': logged_in_employee,
             'all_customers' : all_customers,
         }
-        return render(request, 'employees/index.html', context)
+        return render(request, 'employees/all_customers.html', context)
     except ObjectDoesNotExist:
         return HttpResponseRedirect(reverse('employees:create'))

@@ -5,7 +5,8 @@
 {% block content %}
   {% if user.is_authenticated %}
     Hello Employee {{ logged_in_employee.name }} <br />
-    Zipcode: {{ logged_in_employee.zip_code }}
+    Zipcode: {{ logged_in_employee.zip_code }} <br />
+    Today's Date: {{ today }}
     <br />
     <br />
     <br />
@@ -30,7 +31,7 @@
         <!-- {{ customer.name }} -->
         <tbody>
 
-        {% for customer in all_customers %}
+        {% for customer in customers_need_pickup %}
           <tr>
             <th scope="row"> {{ customer.id }}</th>
             <td>{{ customer.name }}</td>
