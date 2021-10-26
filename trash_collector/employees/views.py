@@ -104,3 +104,4 @@ def confirm_pickup(request, customer_id):
         customer_confirm.balance += 20
         customer_confirm.save()
         return render(request, 'employees/index.html', context)
+        #return 
