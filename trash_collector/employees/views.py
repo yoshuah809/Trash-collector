@@ -75,3 +75,21 @@ def edit_profile(request):
             'logged_in_employee': logged_in_employee
         }
         return render(request, 'employees/edit_profile.html', context)
+
+def all_customers(request):
+    # The following line will get the logged-in user (if there is one) within any view function
+    logged_in_user = request.user
+    try:
+        # This line will return the customer record of the logged-in user if one exists
+        logged_in_employee = Employee.objects.get(user=logged_in_user)
+
+        Customer = apps.get_model('customers.Customer')
+        all_customers = Customer.objects.all()
+
+        context = {
+            'logged_in_employee': logged_in_employee,
+            'all_customers' : all_customers,
+        }
+        return render(request, 'employees/index.html', context)
+    except ObjectDoesNotExist:
+        return HttpResponseRedirect(reverse('employees:create'))

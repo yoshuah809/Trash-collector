@@ -1,0 +1,52 @@
+{% extends 'employees\employee_base.html' %}
+
+{% block title %}{% block header %} Customer List {% endblock %}{% endblock %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+    Hello Employee {{ logged_in_employee.name }} <br />
+    Zipcode: {{ logged_in_employee.zip_code }}
+    <br />
+    <br />
+    <br />
+   
+      <p></p>
+      <h1>List Of Customers</h1>
+      <p></p>
+      <table class="table table-hover">
+     
+        <thead>
+          <tr>
+            <th scope="col">Customer ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Zip Code</th>
+            <th scope="col">Weekly Pickup</th>
+            <th scope="col">One time Pickup</th>
+            <th scope="col">Day of Last Pickup</th>
+          </tr>
+        </thead>
+       
+        <!-- {{ customer.name }} -->
+        <tbody>
+
+        {% for customer in all_customers %}
+          <tr>
+            <th scope="row"> {{ customer.id }}</th>
+            <td>{{ customer.name }}</td>
+            <td>{{ customer.address }}</td>
+            <td>{{ customer.zip_code }}</td>
+            <td>{{ customer.weekly_pickup }}</td>
+            <td>{{ customer.one_time_pickup }}</td>
+            <td>{{ customer.day_of_last_pickup }}</td>
+          
+          </tr>
+         
+        {% endfor  %}  
+
+  {% else %}
+    <p>You are at the employee index, but you are not logged in.</p>
+    <a href="{% url 'login' %}">Log In</a>
+    <a href="{% url 'accounts:register' %}">Sign Up</a>
+  {% endif %}
+{% endblock %}
