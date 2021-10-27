@@ -112,3 +112,32 @@ def filter_by_day(request, id):
         'today': today
     }      
     return render(request, 'employees/all_customers.html', context)
+
+def maps(request, customer_id):
+    today = date.today()
+    logged_in_user = request.user
+    logged_in_employee = Employee.objects.get(user=logged_in_user)
+    API_KEY = 'AIzaSyCVHUIGVg2ZrF7si5bcrXsBh2pPMzKteMY'
+    Customer = apps.get_model('customers.Customer')
+    single_customer = Customer.objects.get(id=customer_id)
+    address = single_customer.address
+    params = {
+        'key' : API_KEY,
+        'address' : address
+    }
+    base_url = 'https://maps.googleapis.com/maps/api/geocode/json?'
+    response = request.get(base_url, params=params).json()
+    response.keys()
+
+    if response['status'] == 'OK' :
+        geometry = response ['result'][0]['geometry']
+        lat = geometry['location']['lat']
+        lng = geometry['location']['lng']
+
+    context = {
+        'logged_in_employee' : logged_in_employee,
+        'lat' : lat,
+        'lng' : lng,
+        'today': today
+    }
+    return render(request, 'employees/all_customers.html', context)
