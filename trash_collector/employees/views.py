@@ -90,15 +90,19 @@ def all_customers(request):
 
 def confirm_pickup(request, customer_id):
     today = date.today()
-    context = {
-       'all_customers' : all_customers,
-    }
+    logged_in_user = request.user
+    logged_in_employee = Employee.objects.get(user=logged_in_user)
     Customer = apps.get_model('customers.Customer')
     customer_confirm = Customer.objects.get(id=customer_id)
     customer_confirm.date_of_last_pickup = today
     customer_confirm.balance += 20
     customer_confirm.save()
     messages.success(request,'Pickup has been confirmed')
+    context = {
+            'logged_in_employee': logged_in_employee,
+            'all_customers' : all_customers,
+            'today': today
+    }
     return render(request, 'employees/index.html', context)
         
 def filter_by_day(request, id):

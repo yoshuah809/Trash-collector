@@ -1,9 +1,5 @@
 {% extends 'employees\employee_base.html' %}
-        {% for msg in messages %}
-          <div class="alert alert-success" role="alert">
-            {{ msg }}
-          </div>
-        {% endfor %}
+
 {% block title %}{% block header %} Employee Home {% endblock %}{% endblock %}
 
 {% block content %}
@@ -11,8 +7,15 @@
     Hello Employee {{ logged_in_employee.name }} <br />
     Zipcode: {{ logged_in_employee.zip_code }} <br />
     Today's Date: {{ today }}
-        
-    <p></p>
+    <br>
+    <p>
+      {% for msg in messages %}
+      <div class="alert alert-success" role="alert">
+        {{ msg }}
+      </div>
+      {% endfor %}
+    </p> 
+    <br>  
       <h1>Customers to Service Today</h1>
      <p></p>
      <table class="table table-hover table-striped">
