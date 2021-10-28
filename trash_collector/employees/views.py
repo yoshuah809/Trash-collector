@@ -7,6 +7,7 @@ from datetime import date
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from .models import Employee
+from django.contrib import messages
 # Create your views here.
 
 # TODO: Create a function for each path created in employees/urls.py. Each will need a template as well.
@@ -97,6 +98,7 @@ def confirm_pickup(request, customer_id):
     customer_confirm.date_of_last_pickup = today
     customer_confirm.balance += 20
     customer_confirm.save()
+    messages.success(request,'Pickup has been confirmed')
     return render(request, 'employees/index.html', context)
         
 def filter_by_day(request, id):

@@ -1,5 +1,9 @@
 {% extends 'employees\employee_base.html' %}
-
+        {% for msg in messages %}
+          <div class="alert alert-success" role="alert">
+            {{ msg }}
+          </div>
+        {% endfor %}
 {% block title %}{% block header %} Employee Home {% endblock %}{% endblock %}
 
 {% block content %}
@@ -7,16 +11,11 @@
     Hello Employee {{ logged_in_employee.name }} <br />
     Zipcode: {{ logged_in_employee.zip_code }} <br />
     Today's Date: {{ today }}
-    <br />
-    <br />
-    <br />
-   
-      <p></p>
+        
+    <p></p>
       <h1>Customers to Service Today</h1>
-      <p></p>
-      
-   
-      <table class="table table-hover table-striped">
+     <p></p>
+     <table class="table table-hover table-striped">
      
         <thead class="thead-dark">
           <tr>
@@ -30,9 +29,7 @@
             <th scope="col">Confirm Pickup</th>
           </tr>
         </thead>
-       
-       
-        <tbody>
+      <tbody>
 
         {% for customer in customers_need_pickup %}
           <tr>
@@ -43,8 +40,7 @@
             <td>{{ customer.weekly_pickup }}</td>
             <td>{{ customer.one_time_pickup }}</td>
             <td>{{ customer.date_of_last_pickup }}</td>
-            <td><a class = "btn btn-outline-success" href=" {% url 'employees:confirm_pickup' customer.id %} ">Confirm</a></td>
-            <!-- <td><a class = "btn btn-outline-success" href="#">Confirm</a></td> -->
+            <td><a class = "btn btn-outline-success" href=" {% url 'employees:confirm_pickup' customer.id %} ">Confirm</a></td>      
           
           </tr>
          
