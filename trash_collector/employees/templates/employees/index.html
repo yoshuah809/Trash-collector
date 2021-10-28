@@ -16,7 +16,7 @@
       <p></p>
       
    
-      <table class="table table-hover">
+      <table class="table table-hover table-striped">
      
         <thead class="thead-dark">
           <tr>
@@ -27,6 +27,7 @@
             <th scope="col">Weekly Pickup</th>
             <th scope="col">One time Pickup</th>
             <th scope="col">Date of Last Pickup</th>
+            <th scope="col">Confirm Pickup</th>
           </tr>
         </thead>
        
@@ -43,7 +44,6 @@
             <td>{{ customer.one_time_pickup }}</td>
             <td>{{ customer.date_of_last_pickup }}</td>
             <td><a class = "btn btn-outline-success" href=" {% url 'employees:confirm_pickup' customer.id %} ">Confirm</a></td>
-            <td><a class = "btn btn-outline-success" href=" {% url 'employees:maps' customer.id %} ">Map View</a></td>
             <!-- <td><a class = "btn btn-outline-success" href="#">Confirm</a></td> -->
           
           </tr>
